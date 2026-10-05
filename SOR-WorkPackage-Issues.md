@@ -53,7 +53,10 @@ Issue placement:
 
 ---
 
-## Issue 1 — Gegevens browser leaves Werkpakket shown as active
+<details>
+<summary><strong>Issue 1 — Gegevens browser leaves Werkpakket shown as active</strong></summary>
+
+### Issue details
 
 ### Steps to reproduce
 
@@ -91,9 +94,14 @@ The button stays pressed (shown as active) while the mode flag is off, so map cl
 
 - **Structural:** have the `workPackage` toggle register itself with `Util.SetSelectedToolObject(ctrl)` on activation (as other tools do), so `CancelActiveTool()` handles it generically; optionally let `ClearAllObjectEvents()` clean the workpackage UI elements too, so the flag and the UI cannot drift apart.
 
+</details>
+
 ---
 
-## Issue 2 — No loader while a response is in flight (Werkpakket + Functie informatie)
+<details>
+<summary><strong>Issue 2 — No loader while a response is in flight (Werkpakket + Functie informatie)</strong></summary>
+
+### Issue details
 
 ### Steps to reproduce
 
@@ -118,9 +126,14 @@ Nothing changes during the whole wait; the click looks ignored and invites repea
 - In `map-onemap.js`, next to the existing `featureInfo.received` subscription, listen to `featureInfo.requested` and show a lightweight loader; hide it on `featureInfo.received` (plus the watchdog from Issue 3). One change covers Werkpakket and Functie informatie for the map-click fetch.
 - Standardise the `WpkManager.*` → module action calls so every pending request has a visible indicator, instead of relying on each module call remembering to call `HIT.BGT.MASK.show()`.
 
+</details>
+
 ---
 
-## Issue 3 — Functie informatie ignores failed / empty responses
+<details>
+<summary><strong>Issue 3 — Functie informatie ignores failed / empty responses</strong></summary>
+
+### Issue details
 
 ### Steps to reproduce
 
@@ -146,6 +159,8 @@ Complete silence: no message, no cleanup. In Werkpakket mode the same failure is
 
 - In `FeatureInfoReceived`, distinguish “no result” from “request failed”: check `evt.errors` (non-empty) and/or empty `evt.results`, and surface a message via `messageBox.show(...)` instead of silence; keep the current workpackage-specific text for the genuine no-feature case.
 - Add a watchdog when `featureInfo.requested` fires (from the Issue 2 fix): if no `featureInfo.received` arrives within N seconds, hide the loader and inform the user.
+
+</details>
 
 ---
 
